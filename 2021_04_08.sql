@@ -192,7 +192,7 @@ END;
 --여러사람이면 커서
 --IN 매개변수를 프로시져에 넣기
 
-(2005년 구매금액 없는 회원) -- 1명있음
+(2005년 구매금액 없는 회원) -- 1명있음(탁원재)
 SELECT C.CART_MEMBER,
        SUM(C.CART_QTY * P.PROD_PRICE)
   FROM CART C, PROD P
@@ -201,6 +201,9 @@ SELECT C.CART_MEMBER,
  GROUP BY C.CART_MEMBER
  ORDER BY 2 DESC;
 
+
+SELECT *
+FROM MEMBER;
 
 
 

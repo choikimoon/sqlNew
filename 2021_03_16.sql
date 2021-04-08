@@ -87,7 +87,8 @@ FROM dept
 ORDER BY loc DESC;
 
 데이터 정렬(ORDER BY 실습 orderby2)
--- emp 테이블에서 상여(comm) 정보가 있는 사람들만 조회하고 상여(comm)를 만힝 받는 사람이 먼저 조회되도록 정렬하고 상여가 같을 경우 사번으로 내림차순 정렬하세요 (상여가 0인 사람은 상여가 없는 것으로 간주)
+-- emp 테이블에서 상여(comm) 정보가 있는 사람들만 조회하고 상여(comm)를 만힝 받는 사람이 먼저 
+-- 조회되도록 정렬하고 상여가 같을 경우 사번으로 내림차순 정렬하세요 (상여가 0인 사람은 상여가 없는 것으로 간주)
 
 SELECT *
 FROM emp
@@ -96,7 +97,8 @@ WHERE comm IS NOT NULL
     ORDER BY comm DESC, empno DESC;
     
 데이터 정렬(ORDER BY 실습 orderby3)
--- emp 테이블에서 관리자가 있는 사람들만 조회하고, 직군(job) 순으로 오름차순 정렬하고 직군이 같을 경우 사번이 큰 사원이 먼저 조회되도록 쿼리를 작성하세요
+-- emp 테이블에서 관리자가 있는 사람들만 조회하고, 직군(job) 
+--순으로 오름차순 정렬하고 직군이 같을 경우 사번이 큰 사원이 먼저 조회되도록 쿼리를 작성하세요
 
 SELECT *
 FROM emp
@@ -104,7 +106,8 @@ WHERE mgr IS NOT NULL
     ORDER BY job, empno DESC;
     
 데이터정렬 (ORDER BY 실습 orderby4)
---emp 테이블에서 10번 부서(deptno) 혹은 30번 부서에 속하는 사람중 급여(sal)가 1500이 넘는 사람들만 조회하고 이름으로 내림차순 정렬 되도록 쿼리를 작성하세요
+--emp 테이블에서 10번 부서(deptno) 혹은 30번 부서에 속하는 사람중 급여(sal)가 1500이 
+-- 넘는 사람들만 조회하고 이름으로 내림차순 정렬 되도록 쿼리를 작성하세요
 
 SELECT *
 FROM emp
