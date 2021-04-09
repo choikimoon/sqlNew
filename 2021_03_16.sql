@@ -24,7 +24,8 @@ WHERE (ename = 'SMITH' -- (1 +(OR))
     AND job = 'SALESMAN'; -- (3)
     
 --논리연산 (AND,OR 실습 where14)
---emp 테이블에서 1. job이 SALESMAN이거나 2. 사원번호가 78로 시작하면서 입사일자가 1981년 6월 1일 이후인 지원의 정보를 다음과 같이 조회하세요 (1번 조건 또는 2번 조건을 만족하는 직원)
+--emp 테이블에서 1. job이 SALESMAN이거나 2. 사원번호가 78로 시작하면서 입사일자가 1981년 6월 1일 이후인 지원의 
+--정보를 다음과 같이 조회하세요 (1번 조건 또는 2번 조건을 만족하는 직원)
 
 SELECT *
 FROM emp
@@ -258,10 +259,13 @@ ROWNUM 용도
     다른 행과 구분되는 유일한 가상의 컬럼 생성 활용
     튜닝시 ==> 인라인뷰 안에서 로우넘 사용시 뷰멀징이 일어나지 않는다.
     
-SELECT ROWNUM, emp.* -- 에러가 난다 오라클의 문법, 아스테리스가 어디에서 오는지 정해줘야된다 // 한정자라고 이야기한다. // 아스테리스에 한정자를 붙여야 된다.
+SELECT ROWNUM, emp.* -- 에러가 난다 오라클의 문법, 아스테리스가 어디에서 오는지 정해줘야된다 
+--// 한정자라고 이야기한다. // 아스테리스에 한정자를 붙여야 된다.
 FROM emp;
 
-SELECT ROWNUM rn, e.* -- 테이블에도 알리아스를 줄 수가 있다 -- emp가 e로 바뀌었기 때문에 아스테리스도 바꿔줘야된다, 조인을 배울때 테이블에 이름이 같은게 올수가있으므로 알리아스로 구분을 지어준다.
+SELECT ROWNUM rn, e.* -- 테이블에도 알리아스를 줄 수가 있다 
+-- emp가 e로 바뀌었기 때문에 아스테리스도 바꿔줘야된다, 
+--조인을 배울때 테이블에 이름이 같은게 올수가있으므로 알리아스로 구분을 지어준다.
 FROM emp e;
 
 SELECT ROWNUM rn, e.empno
@@ -286,7 +290,8 @@ FROM
 FROM (SELECT empno, ename  
         FROM emp
         ORDER BY ename))
-WHERE rn BETWEEN (:page-1)*:pageSize + 1 AND :page*:pageSize; -- 앞에 (:)콜론을 붙여주면 변수가 된다 -- 숫자를 입력안하고 공백이있으면 문자열로 에러가남
+WHERE rn BETWEEN (:page-1)*:pageSize + 1 AND :page*:pageSize; 
+-- 앞에 (:)콜론을 붙여주면 변수가 된다 -- 숫자를 입력안하고 공백이있으면 문자열로 에러가남
 -- 바인딩 변수라고 한다
 
 SELECT *
