@@ -61,15 +61,106 @@ SELECT B.PROD_BUYER AS 거래처코드,
         Alias는 거래처코드, 거래처명, 매입금액합계이고
         매입금액 합계가 500만원 이상인 거래처만 검색하시오
         
-SELECT B.PROD_BUYER AS 거래처코드,
+/*SELECT B.PROD_BUYER AS 거래처코드,
        C.BUYER_NAME AS 거래처명,
        SUM(A.BUY_QTY*A.BUY_COST) AS 매입금액합계
   FROM BUYPROD A, PROD B, BUYER C
  WHERE A.BUY_PROD=B.PROD_ID
  GROUP BY B.PROD_BUYER,C.BUYER_NAME
- ORDER BY 1;
+ ORDER BY 1;*/
  
-        
+ --선생님 풀이
+ SELECT A.BUYER_ID AS 거래처코드,
+        A.BUYER_NAME AS 거래처명,
+        SUM(BUY_COST*BUY_QTY) AS 매입금액합계
+   FROM BUYER A, BUYPROD B, PROD C
+  WHERE B.BUY_PROD=C.PROD_ID --거래처코드 조인
+    AND C.PROD_BUYER=A.BUYER_ID
+    AND B.BUY_DATE BETWEEN '20050101' AND '20050331'
+  GROUP BY A.BUYER_ID, A.BUYER_NAME
+  HAVING SUM(BUY_COST*BUY_QTY) >= 5000000;
+ 
+ 
  문제2] 사원테이블(EMPLOYEES)에서 부서별 평균급여보다 급여를 많이 받는 직원들의 수를 
         부서별로 조회하시오 -- 서브쿼리
         Alias는 부서코드,부서명,부서평균급여,인원수 -- AVG, COUNT
+        
+ --선생님 풀이
+ --메인쿼리 : 출력하는 부분
+ --서브쿼리 : 메인쿼리를 처리하기위한 중간결과
+ 
+(메인쿼리) : 사원테이블(EMPLOYEES)에서 부서별 평균급여보다 급여를 많이 받는 직원들의 수
+
+SELECT TBLA.DEPARTMENT_ID AS 부서코드,
+       TBLA.DEPARTMENT_NAME AS 부서명,
+       (SELECT ROUND(AVG(SALARY))
+          FROM EMPLOYEES TBLC
+         WHERE TBLC.DEPARTMENT_ID=TBLB.DID) AS 부서평균급여,
+                TBLB.CNT AS 인원수 
+       -- 부서코드 부서명 부서평균급여가 그룹핑된다
+        -- 부서평균과 인원수는 다른곳에서구해서가져와야함 
+  FROM DEPARTMENTS TBLA,
+       (SELECT A.DEPARTMENT_ID AS DID,
+               COUNT(*) AS CNT
+          FROM (SELECT DEPARTMENT_ID, 
+                       ROUND(AVG(SALARY)) AS ASAL 
+                  FROM EMPLOYEES
+                  GROUP BY DEPARTMENT_ID) A, EMPLOYEES B
+          WHERE A.DEPARTMENT_ID=B.DEPARTMENT_ID
+            AND B.SALARY>=A.ASAL
+          GROUP BY A.DEPARTMENT_ID
+          ORDER BY 1) TBLB
+   WHERE TBLA.DEPARTMNET_ID=TBLB.DID;
+  
+  
+(서브쿼리1) : 부서별평균급여
+SELECT DEPARTMENT_ID, 
+       ROUND(AVG(SALARY)) AS ASAL 
+  FROM EMPLOYEES
+ GROUP BY DEPARTMENT_ID;
+ 
+(서브쿼리2) : 부서평균급여보다 급여를 많이 받고 있는 직원수
+SELECT A.DEPARTMENT_ID,
+       COUNT(*) AS CNT
+  FROM (SELECT DEPARTMENT_ID, 
+               ROUND(AVG(SALARY)) AS ASAL 
+          FROM EMPLOYEES
+         GROUP BY DEPARTMENT_ID) A, EMPLOYEES B
+  WHERE A.DEPARTMENT_ID=B.DEPARTMENT_ID
+    AND B.SALARY>=A.ASAL
+  GROUP BY A.DEPARTMENT_ID
+  ORDER BY 1;
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
